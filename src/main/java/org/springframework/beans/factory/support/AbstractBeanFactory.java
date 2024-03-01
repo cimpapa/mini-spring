@@ -42,6 +42,8 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
 	@Override
 	public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
 		//有则覆盖
+		// 这里的先删除，删除的是重复的处理器，而不是删除前一个已添加的
+		// 防止重复添加
 		this.beanPostProcessors.remove(beanPostProcessor);
 		this.beanPostProcessors.add(beanPostProcessor);
 	}
