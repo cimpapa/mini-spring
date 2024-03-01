@@ -6,5 +6,9 @@ package org.springframework.beans.factory;
  */
 public interface InitializingBean {
 
+	/**
+	 * 这是默认的初始化处理器，只要实现了InitializingBean接口就会有
+	 * @throws Exception
+	 */
 	void afterPropertiesSet() throws Exception;
 }

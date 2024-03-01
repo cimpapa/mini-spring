@@ -57,6 +57,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	 */
 	protected void registerDisposableBeanIfNecessary(String beanName, Object bean, BeanDefinition beanDefinition) {
 		if (bean instanceof DisposableBean || StrUtil.isNotEmpty(beanDefinition.getDestroyMethodName())) {
+			// 这里用DisposableBeanAdapter，因为有些bean实现了DisposableBean接口，有些没有，所以为了同一调用接口方法destroy()，使用了这样一个代理类
 			registerDisposableBean(beanName, new DisposableBeanAdapter(bean, beanName, beanDefinition));
 		}
 	}
@@ -153,6 +154,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			((InitializingBean) bean).afterPropertiesSet();
 		}
 		String initMethodName = beanDefinition.getInitMethodName();
+		// 如果自定义了initMethod同时这个方法名不是默认的，就执行，防止执行两遍
 		if (StrUtil.isNotEmpty(initMethodName) && !(bean instanceof InitializingBean && "afterPropertiesSet".equals(initMethodName))) {
 			Method initMethod = ClassUtil.getPublicMethod(beanDefinition.getBeanClass(), initMethodName);
 			if (initMethod == null) {
