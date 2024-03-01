@@ -23,6 +23,7 @@ public class BeanFactoryPostProcessorAndBeanPostProcessorTest {
 		beanDefinitionReader.loadBeanDefinitions("classpath:spring.xml");
 
 		//在所有BeanDefintion加载完成后，但在bean实例化之前，修改BeanDefinition的属性值
+		// 是通过在beanFactory中查找修改BeanDefinition
 		CustomBeanFactoryPostProcessor beanFactoryPostProcessor = new CustomBeanFactoryPostProcessor();
 		beanFactoryPostProcessor.postProcessBeanFactory(beanFactory);
 
@@ -40,6 +41,7 @@ public class BeanFactoryPostProcessorAndBeanPostProcessorTest {
 
 		//添加bean实例化后的处理器
 		CustomerBeanPostProcessor customerBeanPostProcessor = new CustomerBeanPostProcessor();
+		// 通过添加处理器
 		beanFactory.addBeanPostProcessor(customerBeanPostProcessor);
 
 		Car car = (Car) beanFactory.getBean("car");

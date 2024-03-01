@@ -75,12 +75,15 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 	protected Object initializeBean(String beanName, Object bean, BeanDefinition beanDefinition) {
 		//执行BeanPostProcessor的前置处理
+		// 会调用添加到List集合里的每一个Post处理器
+		// 返回处理好的bean
 		Object wrappedBean = applyBeanPostProcessorsBeforeInitialization(bean, beanName);
 
 		//TODO 后面会在此处执行bean的初始化方法
 		invokeInitMethods(beanName, wrappedBean, beanDefinition);
 
 		//执行BeanPostProcessor的后置处理
+		// 同前置处理器流程
 		wrappedBean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
 		return wrappedBean;
 	}

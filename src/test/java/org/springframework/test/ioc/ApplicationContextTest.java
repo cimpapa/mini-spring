@@ -15,6 +15,13 @@ public class ApplicationContextTest {
 
 	@Test
 	public void testApplicationContext() throws Exception {
+		/*
+		1. 创建beanFactory
+		2. 从xml读取beanDefinition
+		3. 使用FactoryPostProcessor处理BeanDefinition
+		4. 注册beanPostProcessor
+		5. bean实例化
+		 */
 		ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
 
 		Person person = applicationContext.getBean("person", Person.class);
